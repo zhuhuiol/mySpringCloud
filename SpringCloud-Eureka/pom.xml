@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>serviceB</artifactId>
+	<artifactId>SpringCloud-Eureka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>serviceB</name>
+	<name>SpringCloud-Eureka</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -26,7 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
 		<dependency>
