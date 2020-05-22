@@ -1,6 +1,7 @@
 package com.example.serviceA.api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -17,19 +18,26 @@ public class UserInfoRestService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${server.port}")
+    private String port;
+
     @RequestMapping(value = "/api/getUserInfo")
     public Object getUserInfo(HttpServletRequest request, HttpServletResponse response) {
         HashMap hashMap = new HashMap();
         hashMap.put("name", "serviceA");
         return hashMap;
     }
-    //调用serviceB的接口
+    //rest方式调用serviceB的接口
     @RequestMapping(value = "/getBinfo")
     public Object getBinfo() {
-//        String forObject = this.restTemplate.getForObject("http://localhost:8082/api/getUserInfo", String.class);
-        String forObject = this.restTemplate.getForObject("http://windows-iivhjs7:8082/api/getUserInfo", String.class);
+//        String forObject = this.restTemplate.getForObject("http://127.0.0.1:8082/api/getUserInfo", String.class);
+//        String s = this.restTemplate.postForObject("http://windows-iivhjs7:8082/api/getUserInfo", null, String.class);
+//        System.out.println("调用b服务返回：" +s);
 
-        return "调用b服务返回：" + forObject;
+        System.out.println("rest以别名方式调用b服务需要依赖ribbon负载均衡器，在启动类注入restTemplate的时候加上@LoadBalanced注解");
+        String tobj = this.restTemplate.postForObject("http://SERVICEB/api/getUserInfo", null, String.class);
+        System.out.println("rest以别名方式调用b服务返回：" +tobj);
+        return "调用b服务返回：" + tobj + ",端口：" + this.port;
     }
 
 }
